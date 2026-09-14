@@ -1,0 +1,1020 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "receber_mensagem_zapi",
+        "options": {}
+      },
+      "id": "e2947f40-ff2d-4f15-bddd-48f27701f360",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -800,
+        -128
+      ],
+      "webhookId": "f03e187f-f02e-4f1d-8712-7fbc3b5c845d"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d38f0c9a-dd41-4256-80bb-95c97e8d8c78",
+              "leftValue": "={{ $json.body.isGroup }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "713dbfa0-fe78-47da-b799-f93b2eed3aba",
+              "leftValue": "={{ $json.body.broadcast }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "598ed823-6b03-4d81-83a7-db5474034848",
+              "leftValue": "={{ $json.body.broadcast }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "267b603a-db1c-494e-854b-91ba29fd1770",
+              "leftValue": "={{ $json.body.fromApi }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "17c6181c-b1d7-4b1f-bd91-e821c581ba8c",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -624,
+        -128
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a1b2c3d4-texto",
+                    "leftValue": "={{ $('Webhook').item.json.body.text.message }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Texto"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a1b2c3d4-audio",
+                    "leftValue": "={{ $('Webhook').item.json.body.audio.audioUrl }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Áudio"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "eac0d300-beaf-45b8-a984-cbfea4b838cb",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -464,
+        -144
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "898c2ecd-faac-4298-9849-0b6e354217a6",
+              "name": "iD",
+              "value": "={{ $('If').item.json.body.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "d6277898-3212-4754-a9e1-cb59fa010246",
+              "name": "=mensagem",
+              "value": "={{ $json.text || $('Webhook').first().json.body?.text?.message }}",
+              "type": "string"
+            },
+            {
+              "id": "6cf5616e-5185-425f-b123-669924a0cee0",
+              "name": "Nome",
+              "value": "={{ $('If').item.json.body.chatName }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d9a71f5d-9d50-4f08-9d51-d0beca5f1e81",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -16,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1i8kFHdBqvw3Nct7YF79_UuJdOW89k2IkC6J_wmZ8cLo",
+          "mode": "list",
+          "cachedResultName": "teste n8n",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i8kFHdBqvw3Nct7YF79_UuJdOW89k2IkC6J_wmZ8cLo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 356030884,
+          "mode": "list",
+          "cachedResultName": "Folha2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i8kFHdBqvw3Nct7YF79_UuJdOW89k2IkC6J_wmZ8cLo/edit#gid=356030884"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Number": "={{ $('Edit Fields').item.json.iD }}",
+            "Nome": "={{ $('Edit Fields').item.json.Nome }}"
+          },
+          "matchingColumns": [
+            "Number"
+          ],
+          "schema": [
+            {
+              "id": "Number",
+              "displayName": "Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "fa0e7390-46f2-453b-ad31-f0f9cb1c8d8f",
+      "name": "Append or update row in sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        160,
+        -160
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fu9jujLHGxYlakjY",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Edit Fields').item.json.mensagem }} ",
+        "options": {
+          "systemMessage": "=Você é um atendente acolhedor, paciente e muito simpático da \"Instituição Vindaça\". Seu trabalho é fazer o cadastro de pessoas para as oficinas oferecidas pela instituição.\n\nCONTEXTO DO PÚBLICO:\nAs pessoas que falarão com você muitas vezes têm baixa escolaridade, podem ser analfabetas e enviarão mensagens de áudio. Suas respostas também serão transformadas em áudio para elas ouvirem.\n- Fale de um jeito MUITO simples e carinhoso, como se estivesse conversando com um vizinho.\n- Use frases curtas e diretas.\n- Nunca use palavras difíceis, jargões técnicos ou linguagem de \"robô\".\n- Se a pessoa enviar um áudio confuso, seja paciente, acolha o que ela disse e faça a pergunta novamente de forma mais simples.\n\nSUA MISSÃO - DADOS A COLETAR:\nVocê precisa descobrir 4 coisas, uma de cada vez:\n1. Qual é o nome da pessoa.\n2. Qual é a idade dela.\n3. Qual é o bairro onde ela mora aqui em Fortaleza.\n4. Qual oficina ela quer participar ou qual ajuda está precisando no momento.\n\nREGRAS OBRIGATÓRIAS (SIGA À RISCA):\n- FAÇA APENAS UMA PERGUNTA POR VEZ. Nunca, em hipótese alguma, faça duas perguntas na mesma mensagem.\n- Comece a conversa com um \"Oi!\" bem animado, diga que é da Instituição Vindaça e pergunte o nome da pessoa.\n- Espere a pessoa responder antes de passar para a próxima pergunta.\n- Se a pessoa responder algo incompleto (ex: só disse o primeiro nome), não tem problema, aceite e passe para a próxima pergunta para não complicar.\n\nA REGRA DO GATILHO FINAL (MUITO IMPORTANTE):\nAssim que você tiver coletado os 4 dados com sucesso, você DEVE encerrar a conversa usando EXATAMENTE esta frase obrigatória para que o nosso sistema salve a ficha:\n\"Prontinho, seu cadastro está feito.\"\n\nVocê pode complementar o encerramento após o gatilho, por exemplo: \"Prontinho, seu cadastro está feito. A equipe da Vindaça vai entrar em contato com você logo logo. Um abraço bem apertado e até mais!\""
+        }
+      },
+      "id": "1dc19dba-ddcc-4e93-923a-91502acd96cc",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        336,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b",
+        "options": {}
+      },
+      "id": "4cedbdc0-5bae-46a8-9ad6-32882d556f57",
+      "name": "Groq Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        192,
+        96
+      ],
+      "credentials": {
+        "groqApi": {
+          "id": "JYjj9Ok7WtwtAAfs",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Append or update row in sheet').item.json.Number }}",
+        "contextWindowLength": 10
+      },
+      "id": "9437cc39-dd23-4d2d-8fda-38b4864215d4",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        336,
+        96
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "faf7f150-1853-4a8d-864c-a8db04f08612",
+      "name": "Calculator",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        576,
+        96
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "id": "7e3675a2-3aae-4e53-a5da-47d365b87684",
+      "name": "Wikipedia",
+      "type": "@n8n/n8n-nodes-langchain.toolWikipedia",
+      "typeVersion": 1,
+      "position": [
+        464,
+        96
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "if2-contains-cadastro",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "cadastro está feito",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "823b3f20-995b-478d-9bff-63c192c501d6",
+      "name": "If1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        624,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "8c3b518e-06d5-4ecc-bb51-c8dc1a065c04",
+      "name": "Chat Memory Manager",
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        832,
+        -400
+      ]
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Edit Fields').item.json.iD }}",
+        "contextWindowLength": 10
+      },
+      "id": "33a3065a-13a8-4bff-86fc-032392748219",
+      "name": "Simple Memory History",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        832,
+        -256
+      ]
+    },
+    {
+      "parameters": {
+        "text": "={{ JSON.stringify($json.messages) }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "nome",
+              "description": "Nome da pessoa"
+            },
+            {
+              "name": "idade",
+              "type": "number",
+              "description": "Idade da pessoa"
+            },
+            {
+              "name": "bairro",
+              "description": "Bairro onde a pessoa mora"
+            },
+            {
+              "name": "necessidade",
+              "description": "Necessidade da pessoa (oficina ou ajuda que precisa)"
+            },
+            {
+              "name": "numero de contato",
+              "description": "Número de contato da pessoa"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6a39d8bf-0abb-408d-8464-79009366d2e7",
+      "name": "Information Extractor",
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        1136,
+        -400
+      ]
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b",
+        "options": {}
+      },
+      "id": "56133354-4e77-442e-bc6e-2b9cfd5a083d",
+      "name": "Groq Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        -256
+      ],
+      "credentials": {
+        "groqApi": {
+          "id": "JYjj9Ok7WtwtAAfs",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1i8kFHdBqvw3Nct7YF79_UuJdOW89k2IkC6J_wmZ8cLo",
+          "mode": "list",
+          "cachedResultName": "teste n8n",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i8kFHdBqvw3Nct7YF79_UuJdOW89k2IkC6J_wmZ8cLo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 356030884,
+          "mode": "list",
+          "cachedResultName": "Folha2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i8kFHdBqvw3Nct7YF79_UuJdOW89k2IkC6J_wmZ8cLo/edit#gid=356030884"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Number": "={{ $json.output['numero de contato'] }}",
+            "Nome": "={{ $json.output.nome }}"
+          },
+          "matchingColumns": [
+            "Number"
+          ],
+          "schema": [
+            {
+              "id": "Number",
+              "displayName": "Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "6de5a3c0-b7d8-408d-8b43-27122bfb3982",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1472,
+        -400
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fu9jujLHGxYlakjY",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "delete",
+        "deleteMode": "all"
+      },
+      "id": "2e4a3e0f-6cb5-4812-bc53-f0d22585283a",
+      "name": "Chat Memory Manager1",
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        1664,
+        -400
+      ]
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Edit Fields').item.json.iD }}",
+        "contextWindowLength": 10
+      },
+      "id": "e97ca3ff-4b57-4a00-886e-0071ed75fc57",
+      "name": "Simple Memory Clear",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        1664,
+        -240
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "speech",
+        "voice": {
+          "__rl": true,
+          "value": "hpp4J3VqNfWAUOO0d1Us",
+          "mode": "list",
+          "cachedResultName": "Bella - Professional, Bright, Warm"
+        },
+        "text": "={{ $json.output }}",
+        "additionalOptions": {
+          "model": {
+            "__rl": true,
+            "mode": "id",
+            "value": "eleven_multilingual_v2"
+          }
+        },
+        "requestOptions": {}
+      },
+      "id": "e7c3d7ee-e60f-400d-87d0-5f0dec347cdb",
+      "name": "Create Speech",
+      "type": "@elevenlabs/n8n-nodes-elevenlabs.elevenLabs",
+      "typeVersion": 1,
+      "position": [
+        2048,
+        -144
+      ],
+      "credentials": {
+        "elevenLabsApi": {
+          "id": "Wyqb5iCPhEQoT8kB",
+          "name": "ElevenLabs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nfor (let i = 0; i < items.length; i++) {\n  // Puxa o áudio real do HD do servidor\n  const buffer = await this.helpers.getBinaryDataBuffer(i, 'data');\n  \n  // Transforma em texto Base64 de verdade e salva\n  items[i].json.audio_base64 = buffer.toString('base64');\n}\n\nreturn items;"
+      },
+      "id": "9588db31-2265-4fb9-8146-d88d55349ea8",
+      "name": "Code in JavaScript",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2192,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.z-api.io/instances/3F8EA1C75F4601E420AEE671B12CC0F3/token/D03F1DEE12E314669D88221C/send-audio",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Client-Token",
+              "value": "F4d8635f24d2e4cf8b596d440deb68802S"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "phone",
+              "value": "={{ $('Edit Fields').item.json.iD }}"
+            },
+            {
+              "name": "audio",
+              "value": "=data:{{ $binary.data.mimeType }};base64,{{ $json.audio_base64 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d1b09dd8-6ab7-4a3b-b595-616b465835aa",
+      "name": "HTTP Request - Enviar Audio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        2384,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.z-api.io/instances/3F8EA1C75F4601E420AEE671B12CC0F3/token/D03F1DEE12E314669D88221C/send-text",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Client-Token",
+              "value": "F4d8635f24d2e4cf8b596d440deb68802S"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "phone",
+              "value": "={{ $('Edit Fields').item.json.iD }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $('AI Agent').item.json.output }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c53f236e-e018-4575-ab1d-f24b0129e1a2",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        2384,
+        -144
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Webhook').item.json.body.audio.audioUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "38bcacbb-6790-4787-b4ab-1e6d67f57635",
+      "name": "HTTP Request Audio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -320,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/audio/transcriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "groqApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "model",
+              "value": "whisper-large-v3"
+            },
+            {
+              "name": "prompt",
+              "value": "Áudio de um morador de Fortaleza no Ceará fazendo cadastro na Instituição Vindaça. Pode conter nomes de bairros locais e gírias regionais."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2ad3553a-d431-4516-bd66-d339ba85e955",
+      "name": "Transcrever Audio (Groq)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -160,
+        -16
+      ],
+      "credentials": {
+        "groqApi": {
+          "id": "JYjj9Ok7WtwtAAfs",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "e2e0ee6e-bdb0-45a2-bba6-dd13ca296d94",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        192
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wikipedia": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Speech",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Memory Manager": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory History": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Memory Manager",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Memory Manager1": {
+      "main": [
+        [
+          {
+            "node": "Create Speech",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory Clear": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Memory Manager1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Speech": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Enviar Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Audio": {
+      "main": [
+        [
+          {
+            "node": "Transcrever Audio (Groq)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcrever Audio (Groq)": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "1b693d92-19f2-45d9-a38d-bec291e607c3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ba2aa389fafa89a86b622719a4f09d6737c2085b9daeabf8a4424689ad725de6"
+  },
+  "nodeGroups": [],
+  "id": "eYqPKO43o0yvFayJ",
+  "tags": []
+}
