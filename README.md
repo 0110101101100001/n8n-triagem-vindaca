@@ -3,7 +3,7 @@
 ![Arquitetura do Fluxo no n8n](image_45333f.png)
 
 ## 📌 Sobre o Projeto
-Este projeto consiste na arquitetura de um assistente virtual conversacional baseado em WhatsApp, desenvolvido para automatizar a triagem e o cadastro de moradores atendidos pela **Instituição Vindaça**, localizada em Fortaleza - CE. 
+Este projeto consiste na arquitetura de um assistente virtual conversacional baseado em WhatsApp, desenvolvido para automatizar a triagem e o cadastro de moradores atendidos pela **Instituição Vidança**, localizada em Fortaleza - CE. 
 
 O foco do desenvolvimento é fornecer um atendimento empático, humanizado e acessível (com forte suporte a interações por áudio), garantindo que os assistentes sociais recebam os dados estruturados em tempo real.
 
