@@ -1,4 +1,4 @@
-# 🤖 Bot de Triagem Inteligente - Instituição Vindaça
+# 🤖 Bot de Triagem Inteligente - Instituição Vidança
 
 ![Arquitetura do Fluxo no n8n](image_45333f.png)
 
