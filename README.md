@@ -1,6 +1,6 @@
 # 🤖 Bot de Triagem - Instituição Vindaça
 
-![Arquitetura do Fluxo no n8n]
+![Arquitetura do Fluxo no n8n](image_45333f.png)
 
 ## 📌 Sobre o Projeto
 Automação de triagem via WhatsApp desenvolvida para a **Instituição Vindaça** (Fortaleza - CE). O sistema automatiza a coleta e estruturação de dados de novos cadastros, permitindo interação por texto e por mensagens de áudio para atender usuários com limitações de leitura e escrita.
